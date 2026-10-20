@@ -11,30 +11,14 @@ const { BASE_URL } = require('./config');
 
 const FOLDER_DEFINITIONS = [
   {
-    id: 'folder-football-replays',
-    sport: 'football',
-    title: 'Football',
-    poster: '/posters/replays/luffy_football.jpg',
-    catalogs: [
-      { id: 'nuvio_sports_replays_football_today', name: "📅 Today's Replays" },
-      { id: 'nuvio_sports_replays_football_yesterday', name: "📅 Yesterday's Replays" },
-      { id: 'nuvio_sports_replays_football_this_week', name: "📅 This Week's Replays" },
-      { id: 'nuvio_sports_replays_football_premier_league', name: '🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League Replays' },
-      { id: 'nuvio_sports_replays_football_ucl', name: '⭐ Champions League & UEFA' },
-      { id: 'nuvio_sports_replays_football_older', name: '📅 Older Replays' },
-      { id: 'nuvio_sports_replays_football', name: '⚽ All Football Replays' }
-    ]
-  },
-  {
     id: 'folder-motorsport-replays',
     sport: 'motorsport',
-    title: 'Motorsport',
+    title: 'US Motorsports',
     poster: '/posters/replays/luffy_motorsport.jpg',
     catalogs: [
       { id: 'nuvio_sports_replays_motorsport_today', name: "📅 Today's Races" },
       { id: 'nuvio_sports_replays_motorsport_yesterday', name: "📅 Yesterday's Races" },
       { id: 'nuvio_sports_replays_motorsport_this_week', name: "📅 This Week's Races" },
-      { id: 'nuvio_sports_replays_motorsport_f1', name: '🏎️ Formula 1 Replays' },
       { id: 'nuvio_sports_replays_motorsport_older', name: '📅 Older Races' },
       { id: 'nuvio_sports_replays_motorsport', name: '🏁 All Motorsport Replays' }
     ]
@@ -54,22 +38,9 @@ const FOLDER_DEFINITIONS = [
     ]
   },
   {
-    id: 'folder-rugby-replays',
-    sport: 'rugby',
-    title: 'Rugby',
-    poster: '/posters/replays/luffy_rugby.jpg',
-    catalogs: [
-      { id: 'nuvio_sports_replays_rugby_today', name: "📅 Today's Matches" },
-      { id: 'nuvio_sports_replays_rugby_yesterday', name: "📅 Yesterday's Matches" },
-      { id: 'nuvio_sports_replays_rugby_this_week', name: "📅 This Week's Matches" },
-      { id: 'nuvio_sports_replays_rugby_older', name: '📅 Older Matches' },
-      { id: 'nuvio_sports_replays_rugby', name: '🏉 All Rugby Replays' }
-    ]
-  },
-  {
     id: 'folder-basketball-replays',
     sport: 'basketball',
-    title: 'Basketball',
+    title: 'NBA & College Basketball',
     poster: '/posters/replays/luffy_basketball.jpg',
     catalogs: [
       { id: 'nuvio_sports_replays_basketball_today', name: "📅 Today's Games" },
@@ -81,23 +52,9 @@ const FOLDER_DEFINITIONS = [
     ]
   },
   {
-    id: 'folder-tennis-replays',
-    sport: 'tennis',
-    title: 'Tennis',
-    poster: '/posters/replays/luffy_tennis.jpg',
-    catalogs: [
-      { id: 'nuvio_sports_replays_tennis_today', name: "📅 Today's Matches" },
-      { id: 'nuvio_sports_replays_tennis_yesterday', name: "📅 Yesterday's Matches" },
-      { id: 'nuvio_sports_replays_tennis_this_week', name: "📅 This Week's Matches" },
-      { id: 'nuvio_sports_replays_tennis_atp', name: "🎾 ATP Tour Replays" },
-      { id: 'nuvio_sports_replays_tennis_older', name: "📅 Older Matches" },
-      { id: 'nuvio_sports_replays_tennis', name: "All Tennis Replays" }
-    ]
-  },
-  {
     id: 'folder-hockey-replays',
     sport: 'hockey',
-    title: 'Hockey',
+    title: 'NHL Hockey',
     poster: '/posters/replays/luffy_hockey.jpg',
     catalogs: [
       { id: 'nuvio_sports_replays_hockey_today', name: "📅 Today's Games" },
@@ -111,7 +68,7 @@ const FOLDER_DEFINITIONS = [
   {
     id: 'folder-american_football-replays',
     sport: 'american_football',
-    title: 'American Football',
+    title: 'NFL & College Football',
     poster: '/posters/replays/luffy_american_football.jpg',
     catalogs: [
       { id: 'nuvio_sports_replays_american_football_today', name: "📅 Today's Games" },
@@ -195,8 +152,8 @@ function generateCollections(baseUrl = BASE_URL, config = '', options = {}) {
     const coverImageUrl = `${cleanBaseUrl}${def.poster}?v=luffy`;
     const dynamicCatalogs = getSportCatalogs(def);
     const catalogSources = dynamicCatalogs.map(cat => ({
-      addonId: 'community.nuvio.live-sports',
-      addonName: 'Nuvio Live Sports',
+      addonId: 'com.kablekillers.sports.usa',
+      addonName: 'Kable Killers Sports USA',
       manifestUrl: manifestUrl,
       catalogId: cat.id,
       catalogName: cat.name,
@@ -226,7 +183,7 @@ function generateCollections(baseUrl = BASE_URL, config = '', options = {}) {
   return [
     {
       id: 'collection-sports-replays',
-      title: 'Sports Replays',
+      title: 'Kable Killers USA Sports Replays',
       pinToTop: true,
       showAllTab: true,
       viewMode: 'FOLLOW_LAYOUT',
