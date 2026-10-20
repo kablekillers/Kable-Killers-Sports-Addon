@@ -80,6 +80,13 @@ export default { async fetch(request) {
   if(request.method!=="GET"&&request.method!=="HEAD")return json({error:"Method not allowed"},405);
   if(url.pathname==="/"||url.pathname==="/health")return json({name:"Kable Killers Sports USA",status:"manifest-preview",readyForNuvio:false});
   if(url.pathname==="/manifest.json")return json(manifest);
-  if(/^\/(?:catalog|meta|stream)\//.test(url.pathname))return json({error:"Catalog, metadata, and stream providers not yet migrated",readyForNuvio:false},501);
+  const catalogMatch=url.pathname.match(/^\\/catalog\\/(tv|series|channel)\\/([^/]+)\\.json$/);
+  if(catalogMatch){
+    const [,type,id]=catalogMatch;
+    const supported=manifest.catalogs.some(c=>c.type===type&&c.id===id);
+    if(!supported)return json({error:"Unknown catalog",id},404);
+    return json({metas:[],_migration:{status:"provider-data-not-connected",catalog:id,readyForNuvio:false}});
+  }
+  if(/^\\/(?:meta|stream)\\//.test(url.pathname))return json({error:"Metadata and stream providers not yet migrated",readyForNuvio:false},501);
   return json({error:"Not found"},404);
 }};
