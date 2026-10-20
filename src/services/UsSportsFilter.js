@@ -1,7 +1,7 @@
 'use strict';
 // Conservative US-league filter. Unknown events are hidden, not mislabelled.
 const RULES = {
-  american_football: /\b(NFL|NCAA|CFB|college football|FBS|FCS|CFL)\b/i,
+  american_football: /\b(NFL|NCAA|CFB|college football|FBS|FCS)\b/i,
   basketball: /\b(NBA|WNBA|NCAA|NCAAB|college basketball|March Madness|G League)\b/i,
   baseball: /\b(MLB|MiLB|minor league baseball|NCAA|college baseball)\b/i,
   hockey: /\b(NHL|AHL|ECHL|NCAA|college hockey)\b/i,
@@ -16,6 +16,8 @@ function isUsSportsMatch(match) {
   const category = String(match.category || '').toLowerCase();
   const label = [match.title, match.league, match.competition, match.name].filter(Boolean).join(' ');
   if (category === 'networks') return CHANNELS.test(label);
+  if (/\bCFL\b/i.test(label)) return false;
+  if (category === 'american_football' && /\b(Packers|Bears|Vikings|Lions)\s+(?:vs\.?|v\.?|at|@|-)\s+(Packers|Bears|Vikings|Lions)\b/i.test(label)) return true;
   const rule = RULES[category];
   return Boolean(rule && rule.test(label));
 }
