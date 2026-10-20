@@ -47,14 +47,14 @@ const manifest = {
     { type: 'tv', id: 'nuvio_sports_college', name: '🎓 College Sports', extra: [{ name: 'search', isRequired: false }] },
 
     { type: 'tv', id: 'nuvio_sports_upcoming', name: '⏱️ Upcoming', extra: [
-      { name: 'genre', options: ['Football', 'Cricket', 'Basketball', 'Motorsport', 'Tennis', 'Baseball', 'Hockey', 'Rugby', 'American Football', 'MMA', 'Golf', 'Darts', 'Other'], isRequired: false },
+      { name: 'genre', options: ['American Football', 'Basketball', 'Baseball', 'Hockey', 'MMA', 'Motorsport', 'Golf', 'College Sports'], isRequired: false },
       { name: 'search', isRequired: false }
     ] }
   ],
 
   config: [
     { key: 'teams', title: 'Favorite Teams (comma separated)', type: 'text' },
-    { key: 'sports', title: 'Enabled Sports (comma separated)', type: 'text', default: 'American Football,Basketball,Baseball,Hockey,MMA,Motorsport,Golf,College Sports' },
+    { key: 'sports', title: 'Enabled Sports (comma separated)', type: 'text', default: 'american_football,basketball,baseball,hockey,mma,motorsport,golf,college' },
     { 
       key: 'timezone', 
       title: 'Timezone', 
