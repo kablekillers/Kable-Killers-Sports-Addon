@@ -103,7 +103,6 @@ const REPLAY_MANIFEST_ROWS = [
   { type: 'tv', id: 'nuvio_sports_replays_motorsport_yesterday', name: "📅 Yesterday's Races", extra: [{ name: 'skip', isRequired: true }] },
   { type: 'tv', id: 'nuvio_sports_replays_motorsport_this_week', name: "📅 This Week's Races", extra: [{ name: 'skip', isRequired: true }] },
   { type: 'tv', id: 'nuvio_sports_replays_motorsport_older', name: "📅 Older Races", extra: [{ name: 'skip', isRequired: true }] },
-  { type: 'tv', id: 'nuvio_sports_replays_motorsport_f1', name: "🏎️ Formula 1", extra: [{ name: 'skip', isRequired: true }] },
   { type: 'tv', id: 'nuvio_sports_replays_motorsport_recent', name: "🔥 Recent Motorsport", extra: [{ name: 'skip', isRequired: true }] },
 
   // Baseball
