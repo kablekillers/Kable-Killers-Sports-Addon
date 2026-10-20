@@ -23,6 +23,7 @@ const path = require('path');
 const { builder } = require('./manifest');
 const { handleCatalog, handleMeta, isReplayMatch } = require('./catalog');
 const { handleStream } = require('./streams');
+const { isUsSportsMatch } = require('./services/UsSportsFilter');
 const { PORT, BASE_URL, getRequestBaseUrl, getLocalIp } = require('./config');
 const { isLocalDirectRequest } = require('./services/localRequest');
 const container = require('./container');
@@ -946,7 +947,7 @@ app.get('/:config?/manifest.json', (req, res, next) => {
   }
   
   if (typeof parsedConfig.sports === 'string' && parsedConfig.sports !== 'all') {
-    const enabledSports = parsedConfig.sports.split(',');
+    const enabledSports = parsedConfig.sports.split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
     
     // General catalogs to always keep (Your Teams leads first)
     const keepCatalogs = ['nuvio_sports_teams', 'nuvio_sports_live', 'nuvio_sports_upcoming', 'nuvio_sports_networks', 'nuvio_sports_replays'];
@@ -986,7 +987,7 @@ app.get('/:config?/manifest.json', (req, res, next) => {
       const present = new Set();
       for (let i = 0; i < cached.length; i++) {
         const m = cached[i];
-        if (m && m.category) present.add(m.category);
+        if (m && m.category && isUsSportsMatch(m)) present.add(m.category);
       }
 
       // Always-keep catalogs: not tied to a single sport.
@@ -1002,7 +1003,7 @@ app.get('/:config?/manifest.json', (req, res, next) => {
           const parts = [];
           for (let i = 0; i < cached.length; i++) {
             const m = cached[i];
-            if (m && m.category === 'networks' && m.title) {
+            if (m && m.category === 'networks' && m.title && isUsSportsMatch(m)) {
               parts.push(String(m.title).toLowerCase());
             }
           }
