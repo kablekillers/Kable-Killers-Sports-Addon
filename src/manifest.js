@@ -7,12 +7,12 @@
 const { addonBuilder } = require('stremio-addon-sdk');
 
 const manifest = {
-  id: 'community.nuvio.live-sports',
+  id: 'com.kablekillers.sports.usa',
   version: '3.1.3',
-  name: '🏆 Nuvio Live Sports',
+  name: '⚡ Kable Killers Sports USA',
   description:
-    'The ultimate live sports aggregator. Stream live Football, NBA, NFL, NHL, F1, and more. ' +
-    'Aggregates high-speed live streams and 24/7 sports TV networks with zero-lag playback.',
+    'USA-focused sports catalogs including NFL, NBA, MLB, NHL, NCAA, and UFC worldwide. ' +
+    'Live events, sports networks, and replays subject to source availability.',
   logo: '/logo.png',
 
   types: ['tv', 'series', 'channel'],
@@ -21,39 +21,30 @@ const manifest = {
   catalogs: [
     { type: 'tv', id: 'nuvio_sports_teams', name: '⭐ Your Teams', extra: [{ name: 'search', isRequired: false }] },
     { type: 'tv', id: 'nuvio_sports_live', name: '🔴 Live Now', extra: [
-      { name: 'genre', options: ['Football', 'Cricket', 'Basketball', 'Motorsport', 'Tennis', 'Baseball', 'Hockey', 'Rugby', 'American Football', 'MMA', 'Golf', 'Darts', 'Other'], isRequired: false },
+      { name: 'genre', options: ['American Football', 'Basketball', 'Baseball', 'Hockey', 'MMA', 'Motorsport', 'Golf'], isRequired: false },
       { name: 'search', isRequired: false }
     ] },
-    { type: 'tv', id: 'nuvio_sports_networks', name: '📺 24/7 Live TV', extra: [
+    { type: 'tv', id: 'nuvio_sports_networks', name: '📺 US Sports Channels', extra: [
       { name: 'search', isRequired: false },
       { name: 'skip', isRequired: false }
     ] },
     { type: 'tv', id: 'nuvio_sports_replays', name: '⏪ Sports Replays', extra: [{ name: 'skip', isRequired: true }] },
     
     // Parent Replay Catalogs
-    { type: 'tv', id: 'nuvio_sports_replays_football', name: '⚽ Football Replays', extra: [{ name: 'skip', isRequired: true }] },
     { type: 'tv', id: 'nuvio_sports_replays_motorsport', name: '🏎️ Motorsport Replays', extra: [{ name: 'skip', isRequired: true }] },
     { type: 'tv', id: 'nuvio_sports_replays_baseball', name: '⚾ Baseball Replays', extra: [{ name: 'skip', isRequired: true }] },
-    { type: 'tv', id: 'nuvio_sports_replays_rugby', name: '🏉 Rugby Replays', extra: [{ name: 'skip', isRequired: true }] },
     { type: 'tv', id: 'nuvio_sports_replays_basketball', name: '🏀 Basketball Replays', extra: [{ name: 'skip', isRequired: true }] },
-    { type: 'tv', id: 'nuvio_sports_replays_tennis', name: '🎾 Tennis Replays', extra: [{ name: 'skip', isRequired: true }] },
     { type: 'tv', id: 'nuvio_sports_replays_hockey', name: '🏒 Hockey Replays', extra: [{ name: 'skip', isRequired: true }] },
     { type: 'tv', id: 'nuvio_sports_replays_american_football', name: '🏈 American Football Replays', extra: [{ name: 'skip', isRequired: true }] },
 
-    { type: 'tv', id: 'nuvio_sports_football', name: '⚽ Soccer', extra: [{ name: 'search', isRequired: false }] },
-    { type: 'tv', id: 'nuvio_sports_cricket', name: '🏏 Cricket', extra: [{ name: 'search', isRequired: false }] },
     { type: 'tv', id: 'nuvio_sports_basketball', name: '🏀 Basketball', extra: [{ name: 'search', isRequired: false }] },
-    { type: 'tv', id: 'nuvio_sports_motorsport', name: '🏎️ F1 & Motor', extra: [{ name: 'search', isRequired: false }] },
+    { type: 'tv', id: 'nuvio_sports_motorsport', name: '🏁 US Motorsports', extra: [{ name: 'search', isRequired: false }] },
     { type: 'tv', id: 'nuvio_sports_hockey', name: '🏒 Hockey', extra: [{ name: 'search', isRequired: false }] },
     { type: 'tv', id: 'nuvio_sports_baseball', name: '⚾ Baseball', extra: [{ name: 'search', isRequired: false }] },
-    { type: 'tv', id: 'nuvio_sports_mma', name: '🥊 MMA', extra: [{ name: 'search', isRequired: false }] },
+    { type: 'tv', id: 'nuvio_sports_mma', name: '🥊 UFC & MMA', extra: [{ name: 'search', isRequired: false }] },
     { type: 'tv', id: 'nuvio_sports_golf', name: '⛳ Golf', extra: [{ name: 'search', isRequired: false }] },
-    { type: 'tv', id: 'nuvio_sports_tennis', name: '🎾 Tennis', extra: [{ name: 'search', isRequired: false }] },
-    { type: 'tv', id: 'nuvio_sports_rugby', name: '🏉 Rugby', extra: [{ name: 'search', isRequired: false }] },
     { type: 'tv', id: 'nuvio_sports_american_football', name: '🏈 American Football', extra: [{ name: 'search', isRequired: false }] },
-    { type: 'tv', id: 'nuvio_sports_darts', name: '🎯 Darts', extra: [{ name: 'search', isRequired: false }] },
     { type: 'tv', id: 'nuvio_sports_college', name: '🎓 College Sports', extra: [{ name: 'search', isRequired: false }] },
-    { type: 'tv', id: 'nuvio_sports_other', name: '🏅 Other Sports', extra: [{ name: 'search', isRequired: false }] },
 
     { type: 'tv', id: 'nuvio_sports_upcoming', name: '⏱️ Upcoming', extra: [
       { name: 'genre', options: ['Football', 'Cricket', 'Basketball', 'Motorsport', 'Tennis', 'Baseball', 'Hockey', 'Rugby', 'American Football', 'MMA', 'Golf', 'Darts', 'Other'], isRequired: false },
@@ -63,7 +54,7 @@ const manifest = {
 
   config: [
     { key: 'teams', title: 'Favorite Teams (comma separated)', type: 'text' },
-    { key: 'sports', title: 'Enabled Sports (comma separated)', type: 'text', default: 'all' },
+    { key: 'sports', title: 'Enabled Sports (comma separated)', type: 'text', default: 'American Football,Basketball,Baseball,Hockey,MMA,Motorsport,Golf,College Sports' },
     { 
       key: 'timezone', 
       title: 'Timezone', 
