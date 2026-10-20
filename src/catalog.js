@@ -7,6 +7,7 @@ const { parseTimezone } = require('./timezone');
 const { getMatchTier } = require('./services/MainstreamRankingService');
 const { extractTeamsFromTitle } = require('./services/TeamNameExtractor');
 const { filterReplayMatches } = require('./services/ReplayFilterService');
+const { isUsSportsMatch } = require('./services/UsSportsFilter');
 
 function getKickoff(d) {
   if (!d) return 0;
@@ -962,7 +963,7 @@ async function buildReplayHubMeta(id, config = {}) {
     } catch (_) {}
   }
   const replayMatches = filterReplayMatches(
-    rawMatches.filter(m => isReplayMatch(m) && m.sources && m.sources.some(s => REPLAY_SOURCES.has(s.source))),
+    rawMatches.filter(m => isUsSportsMatch(m) && isReplayMatch(m) && m.sources && m.sources.some(s => REPLAY_SOURCES.has(s.source))),
     config
   );
   // When replayFilter === 'mainstream' the hubs legitimately narrow to the
@@ -1213,7 +1214,7 @@ async function handleReplayCatalog(id, extra, config, reqType = 'tv') {
   }
 
   let matches = rawMatches.filter(m => {
-    if (!m || !Array.isArray(m.sources) || m.sources.length === 0) return false;
+    if (!isUsSportsMatch(m) || !Array.isArray(m.sources) || m.sources.length === 0) return false;
     if (!isReplayMatch(m)) return false;
     if (m.sources.some(s => s.source === 'timstreams')) return false;
     if (!m.sources.some(s => REPLAY_SOURCES.has(s.source))) return false;
@@ -1348,7 +1349,7 @@ async function handleCatalogUncached(type, id, extra, config) {
   // Use CacheService instead of hitting APIs on demand
   const cacheService = container.resolve('cacheService');
   const rawMatches = (cacheService.getMatchesReadOnly ? cacheService.getMatchesReadOnly() : cacheService.getMatches()) || [];
-  const matches = rawMatches.filter(m => m && Array.isArray(m.sources) && m.sources.length > 0);
+  const matches = rawMatches.filter(m => isUsSportsMatch(m) && Array.isArray(m.sources) && m.sources.length > 0);
   
   let filteredMatches = matches;
 
