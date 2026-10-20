@@ -16,4 +16,6 @@ jobs:
         run: |
           node --check src/services/UsSportsFilter.js
           node --check src/manifest.js
-          node --test tests/us-sports-filter.node.test.js
+          node --check src/catalog.js
+          node --check src/index.js
+          node --test tests/us-sports-filter.node.test.js tests/usa-catalog-integration.node.test.js
