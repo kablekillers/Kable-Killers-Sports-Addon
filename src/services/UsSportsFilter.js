@@ -11,14 +11,22 @@ const RULES = {
   college: /\b(NCAA|college|CFB|NCAAB|FBS|FCS)\b/i
 };
 const CHANNELS = /\b(ESPN|ESPN2|ESPNU|SEC Network|ACC Network|Big Ten Network|BTN|NFL Network|RedZone|MLB Network|NBA TV|NHL Network|CBS Sports|CBSSN|FS1|FS2|Fox Sports|Golf Channel|TNT Sports|TBS|USA Network|NBC Sports|FanDuel Sports Network)\b/i;
+
+const NFL_TEAMS = new Set(["cardinals","falcons","ravens","bills","panthers","bears","bengals","browns","cowboys","broncos","lions","packers","texans","colts","jaguars","chiefs","raiders","chargers","rams","dolphins","vikings","patriots","saints","giants","jets","eagles","steelers","49ers","seahawks","buccaneers","titans","commanders"]);
+function isNflTeamMatchup(label) {
+  const names = [...NFL_TEAMS].map(x => x.replace(/[.*+?^$\{\}()|[\]\\]/g, '\\function isUsSportsMatch(match) {')).join('|');
+  const re = new RegExp('\\b(' + names + ')\\s+(?:vs\\.?|v\\.?|at|@|-)\\s+(' + names + ')\\b', 'i');
+  const match = String(label).match(re);
+  return Boolean(match && match[1].toLowerCase() !== match[2].toLowerCase());
+}
 function isUsSportsMatch(match) {
   if (!match) return false;
   const category = String(match.category || '').toLowerCase();
   const label = [match.title, match.league, match.competition, match.name].filter(Boolean).join(' ');
   if (category === 'networks') return CHANNELS.test(label);
   if (/\bCFL\b/i.test(label)) return false;
-  if (category === 'american_football' && /\b(Packers|Bears|Vikings|Lions)\s+(?:vs\.?|v\.?|at|@|-)\s+(Packers|Bears|Vikings|Lions)\b/i.test(label)) return true;
+  if (category === 'american_football' && isNflTeamMatchup(label)) return true;
   const rule = RULES[category];
   return Boolean(rule && rule.test(label));
 }
-module.exports = { isUsSportsMatch };
+module.exports = { isUsSportsMatch, isNflTeamMatchup };
