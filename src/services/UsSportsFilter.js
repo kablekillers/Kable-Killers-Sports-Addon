@@ -15,7 +15,7 @@ const CHANNELS = /\b(ESPN|ESPN2|ESPNU|SEC Network|ACC Network|Big Ten Network|BT
 const NFL_TEAMS = new Set(["cardinals","falcons","ravens","bills","panthers","bears","bengals","browns","cowboys","broncos","lions","packers","texans","colts","jaguars","chiefs","raiders","chargers","rams","dolphins","vikings","patriots","saints","giants","jets","eagles","steelers","49ers","seahawks","buccaneers","titans","commanders"]);
 function isNflTeamMatchup(label) {
   const names = [...NFL_TEAMS].join('|');
-  const re = new RegExp('\\b(' + names + ')\\s+(?:vs\\.?|v\\.?|at|@|-)\\s+(' + names + ')\\b', 'i');
+  const re = new RegExp('\\b(' + names + ')\\s+(?:vs\\.?|v\\.?|at|@|-)\\s+(?:[a-z.]+\\s+){0,3}(' + names + ')\\b', 'i');
   const match = String(label).match(re);
   return Boolean(match && match[1].toLowerCase() !== match[2].toLowerCase());
 }
@@ -29,7 +29,7 @@ function isLeagueMatchup(category, label) {
   const teams = category === 'american_football' ? [...NFL_TEAMS] : LEAGUE_TEAMS[category];
   if (!teams) return false;
   const names = teams.join('|');
-  const re = new RegExp('\\b(' + names + ')\\s+(?:vs\\.?|v\\.?|at|@|-)\\s+(' + names + ')\\b', 'i');
+  const re = new RegExp('\\b(' + names + ')\\s+(?:vs\\.?|v\\.?|at|@|-)\\s+(?:[a-z.]+\\s+){0,3}(' + names + ')\\b', 'i');
   const m = String(label).match(re);
   return Boolean(m && m[1].toLowerCase() !== m[2].toLowerCase());
 }
